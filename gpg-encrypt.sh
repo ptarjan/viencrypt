@@ -38,8 +38,8 @@ else
     echo $passw | gpg -q -d --passphrase-fd 0 $filename > $tmp
     if [ $? != 0 ]; then
         # if gpg didn't work, exit
-        exit $?;
         rm $tmp
+        exit $?;
     fi
 fi
 
