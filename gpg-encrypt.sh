@@ -19,6 +19,13 @@ then
     exit 2
 fi
 
+if [ -f `which shred` ]
+then
+    rm=shred
+else
+    rm=rm
+fi
+
 tmp=`mktemp` || exit 1
 
 # don't show typing
@@ -38,14 +45,14 @@ else
     echo "$passw" | gpg -q -d --passphrase-fd 0 $filename > $tmp
     if [ $? != 0 ]; then
         # if gpg didn't work, exit
-        rm $tmp
+        $rm $tmp
         exit $?;
     fi
 fi
 
 $editor $tmp
 echo "$passw" | gpg -q -c --passphrase-fd 0 --output $filename $tmp
-rm $tmp
+$rm $tmp
 if [ $? != 0 ]; then
     # if gpg didn't work, exit
     exit $?;
