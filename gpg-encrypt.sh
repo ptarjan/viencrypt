@@ -35,7 +35,7 @@ then
     exit 1
 else
     # decrypt into the tmp file
-    echo $passw | gpg -q -d --passphrase-fd 0 $filename > $tmp
+    echo "$passw" | gpg -q -d --passphrase-fd 0 $filename > $tmp
     if [ $? != 0 ]; then
         # if gpg didn't work, exit
         rm $tmp
@@ -44,7 +44,7 @@ else
 fi
 
 $editor $tmp
-echo $passw | gpg -q -c --passphrase-fd 0 --output $filename $tmp
+echo "$passw" | gpg -q -c --passphrase-fd 0 --output $filename $tmp
 rm $tmp
 if [ $? != 0 ]; then
     # if gpg didn't work, exit
