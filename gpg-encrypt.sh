@@ -21,7 +21,7 @@ fi
 
 if [ -f `which shred` ]
 then
-    rm=shred
+    rm='shred -u'
 else
     rm=rm
 fi
