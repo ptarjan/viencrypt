@@ -10,6 +10,13 @@ else
     editor=vi
 fi
 
+# more security for vi
+if [ $editor == "vi" -o $editor == "vim" ]
+then
+    # -n is for noswap and -i NONE is for no .viminfo
+    editor="$editor -n -i NONE"
+fi
+
 if [ $# -eq 0 ] 
 then
     echo "No filename specified. Using default $filename"
