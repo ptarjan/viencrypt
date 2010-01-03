@@ -13,7 +13,7 @@ fi
 if [ $# = 0 ] 
 then
     echo "No filename specified. Using default $filename"
-elif [ $# > 1 ]
+elif [ $# -gt 1 ]
 then
     echo "$0 [filename.gpg]"
     exit 2
