@@ -10,13 +10,15 @@ else
     editor=vi
 fi
 
-if [ $# = 0 ] 
+if [ $# -eq 0 ] 
 then
     echo "No filename specified. Using default $filename"
 elif [ $# -gt 1 ]
 then
     echo "$0 [filename.gpg]"
     exit 2
+else
+    filename=$1
 fi
 
 if [ -f `which shred` ]
@@ -43,11 +45,14 @@ read -p "Password: " passw; echo
 stty echo
 
 # decrypt into the tmp file
-echo "$passw" | gpg -q -d --passphrase-fd 0 $filename > $tmp
-if [ $? != 0 ]; then
-    # if gpg didn't work, exit
-    $rm $tmp
-    exit $?;
+if [ -f $filename -a -w $filename ]
+then
+    echo "$passw" | gpg -q -d --passphrase-fd 0 $filename > $tmp
+    if [ $? != 0 ]; then
+        # if gpg didn't work, exit
+        $rm $tmp
+        exit $?;
+    fi
 fi
 
 $editor $tmp
