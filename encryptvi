@@ -56,7 +56,7 @@ then
 fi
 
 $editor $tmp
-echo "$passw" | gpg -q -c --passphrase-fd 0 --output $filename --yes $tmp
+echo "$passw" | gpg -q -c --passphrase-fd 0 --output $filename --yes --force-mdc $tmp
 $rm $tmp
 if [ $? != 0 ]; then
     # if gpg didn't work, exit
