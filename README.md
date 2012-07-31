@@ -6,7 +6,7 @@ I use this to keep track of my web passwords.
 
 Usage : 
 
-    $ ./encryptvi 
+    $ ./viencrypt
     No filename specified. Using default passwords.gpg
     passwords.gpg doesn't exist. Starting from empty file.
     Password: 
@@ -14,12 +14,12 @@ Usage :
 
 or for any other file
 
-    $ ./encryptvi my.love.notes
+    $ ./viencrypt my.love.notes
     Password:
     <editor pops up and you edit your file. Once you exit it saves it encrypted>
     
 To change your editor (in bash) :
 
     $ export EDITOR=pico
-    $ ./encryptvi
+    $ ./viencrypt
     <now pico pops up>
