@@ -46,7 +46,7 @@ then
     exit 1
 fi
 
-# don't show typing
+# prompt for password; don't show typing
 stty -echo
 read -p "Password: " passw; echo
 stty echo
@@ -62,7 +62,10 @@ then
     fi
 fi
 
+# edit the file
 $editor $tmp
+
+# write changes back out
 echo "$passw" | gpg -q -c --batch --passphrase-fd 0 --output $filename --yes --force-mdc $tmp
 $rm $tmp
 if [ $? != 0 ]; then
