@@ -40,6 +40,10 @@ tmp=`mktemp` || exit 1
 if [ ! -f $filename ]
 then 
     echo "$filename doesn't exist. Starting from empty file."
+elif [ ! -r $filename ]
+then
+    echo "$filename isn't readable."
+    exit 1
 fi
 
 # prompt for password; don't show typing
