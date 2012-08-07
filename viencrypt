@@ -11,7 +11,7 @@ else
 fi
 
 # more security for vi
-if [ $editor == "vi" -o $editor == "vim" ]
+if [ $editor = "vi" -o $editor = "vim" ]
 then
     # -n is for noswap and -i NONE is for no .viminfo
     editor="$editor -n -i NONE"
