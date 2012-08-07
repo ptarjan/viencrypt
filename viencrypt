@@ -40,19 +40,19 @@ tmp=`mktemp` || exit 1
 if [ ! -f $filename ]
 then 
     echo "$filename doesn't exist. Starting from empty file."
-elif [ ! -w $filename ]
+elif [ ! -r $filename ]
 then
-    echo "$filename isn't writable."
+    echo "$filename isn't readable."
     exit 1
 fi
 
-# don't show typing
+# prompt for password; don't show typing
 stty -echo
 read -p "Password: " passw; echo
 stty echo
 
 # decrypt into the tmp file
-if [ -f $filename -a -w $filename ]
+if [ -f $filename ]
 then
     echo "$passw" | gpg -q -d --batch --passphrase-fd 0 $filename > $tmp
     if [ $? != 0 ]; then
@@ -60,12 +60,24 @@ then
         $rm $tmp
         exit $?;
     fi
+    # if original is unwritable, hint to the editor that the file shouldn't/can't be updated
+    if [ ! -w $filename ]
+    then
+        chmod -w $tmp
+        echo "$filename isn't writable, so any modifications will be discarded"
+    fi
 fi
 
+# edit the file
 $editor $tmp
-echo "$passw" | gpg -q -c --batch --passphrase-fd 0 --output $filename --yes --force-mdc $tmp
-$rm $tmp
-if [ $? != 0 ]; then
-    # if gpg didn't work, exit
-    exit $?;
+
+# write changes back out
+if [ -w $filename -o ! -f $filename ]
+then
+    echo "$passw" | gpg -q -c --batch --passphrase-fd 0 --output $filename --yes --force-mdc $tmp
+    $rm $tmp
+    if [ $? != 0 ]; then
+        # if gpg didn't work, exit
+        exit $?;
+    fi
 fi
