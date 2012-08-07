@@ -11,7 +11,7 @@ else
 fi
 
 # more security for vi
-if [ $editor == "vi" -o $editor == "vim" ]
+if [ $editor = "vi" -o $editor = "vim" ]
 then
     # -n is for noswap and -i NONE is for no .viminfo
     editor="$editor -n -i NONE"
@@ -72,8 +72,12 @@ fi
 $editor $tmp
 
 # write changes back out
-if [ -w $filename -o ! -f $filename ]
+if [ -e $filename -a ! -w $filename ]
 then
+    # the original file is unwritable, and can't be updated
+    chmod +w $tmp
+    $rm $tmp
+else
     echo "$passw" | gpg -q -c --batch --passphrase-fd 0 --output $filename --yes --force-mdc $tmp
     $rm $tmp
     if [ $? != 0 ]; then
