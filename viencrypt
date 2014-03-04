@@ -35,7 +35,7 @@ else
     rm=rm
 fi
 
-tmp=`mktemp` || exit 1
+tmp=`mktemp -t tmp.XXXXXXXXXX` || exit 1
 
 if [ ! -f $filename ]
 then 
