@@ -17,7 +17,7 @@ then
     editor="$editor -n -i NONE"
 fi
 
-if [ $# -eq 0 ] 
+if [ $# -eq 0 ]
 then
     echo "No filename specified. Using default $filename"
 elif [ $# -gt 1 ]
@@ -28,7 +28,7 @@ else
     filename=$1
 fi
 
-if [ -f `which shred` ]
+if [ `which shred` ]
 then
     rm='shred -u'
 else
@@ -38,7 +38,7 @@ fi
 tmp=`mktemp -t tmp.XXXXXXXXXX` || exit 1
 
 if [ ! -f $filename ]
-then 
+then
     echo "$filename doesn't exist. Starting from empty file."
 elif [ ! -r $filename ]
 then
