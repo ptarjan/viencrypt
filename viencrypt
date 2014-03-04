@@ -28,7 +28,7 @@ else
     filename=$1
 fi
 
-if [ -f `which shred` ]
+if [ `which shred` ]
 then
     rm='shred -u'
 else
