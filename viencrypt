@@ -31,8 +31,11 @@ fi
 if [ `which shred` ]
 then
     rm='shred -u'
+elif [ `which srm` ]
+then
+    rm='srm -z'
 else
-    rm=rm
+    rm='rm'
 fi
 
 tmp=`mktemp -t tmp.XXXXXXXXXX` || exit 1
